@@ -8,7 +8,52 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProfilesService = void 0;
 const common_1 = require("@nestjs/common");
+const crypto_1 = require("crypto");
 let ProfilesService = class ProfilesService {
+    profiles = [
+        {
+            id: (0, crypto_1.randomUUID)(),
+            name: 'Brianna Watts',
+            description: "Looking for someone to merge with my heart. I'm a full- stack romantic who refactors my feelings until they pass all tests.Bonus points if you can debug my issues while we pair program over coffee.Let\'s commit to something beautiful together."
+        },
+        {
+            id: (0, crypto_1.randomUUID)(),
+            name: 'Jasper Quinn',
+            description: "Seeking a partner in crime to compile my heart. Must be comfortable with the terminal because I only speak fluent bash. Swipe right if you can appreciate a good kernel panic every now and then."
+        },
+        {
+            id: (0, crypto_1.randomUUID)(),
+            name: 'Leo Park',
+            description: "You think you know VIM? Try Neovim. I\'ll make your modal dreams come true. Want to escape the matrix and explore the perfect keyboard shortcut for love?"
+        }
+    ];
+    findAll() {
+        return this.profiles;
+    }
+    findOne(id) {
+        return this.profiles.find(profile => profile.id === id);
+    }
+    create(createProfileDto) {
+        const createdProfile = {
+            id: (0, crypto_1.randomUUID)(),
+            ...createProfileDto
+        };
+        this.profiles.push(createdProfile);
+        return createdProfile;
+    }
+    update(id, updateProfileDto) {
+        const matchingProfile = this.profiles.find((existingProfile) => existingProfile.id === id);
+        if (!matchingProfile) {
+            return null;
+        }
+        if (updateProfileDto.name) {
+            matchingProfile.name = updateProfileDto.name;
+        }
+        if (updateProfileDto.description) {
+            matchingProfile.description = updateProfileDto.description;
+        }
+        return matchingProfile;
+    }
 };
 exports.ProfilesService = ProfilesService;
 exports.ProfilesService = ProfilesService = __decorate([

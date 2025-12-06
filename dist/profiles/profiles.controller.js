@@ -16,24 +16,23 @@ exports.ProfilesController = void 0;
 const common_1 = require("@nestjs/common");
 const create_profile_dto_1 = require("./dto/create-profile.dto");
 const update_profile_dto_1 = require("./dto/update-profile.dto");
+const profiles_service_1 = require("./profiles.service");
 let ProfilesController = class ProfilesController {
+    profilesService;
+    constructor(profilesService) {
+        this.profilesService = profilesService;
+    }
     findAll(location) {
-        return [{ location }];
+        return this.profilesService.findAll();
     }
     findOne(id) {
-        return { id };
+        return this.profilesService.findOne(id);
     }
     create(createProfileDto) {
-        return {
-            name: createProfileDto.name,
-            description: createProfileDto.description
-        };
+        return this.profilesService.create(createProfileDto);
     }
     update(id, updateProfileDto) {
-        return {
-            id,
-            ...updateProfileDto
-        };
+        return this.profilesService.update(id, updateProfileDto);
     }
     remove(id) {
         return;
@@ -78,6 +77,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ProfilesController.prototype, "remove", null);
 exports.ProfilesController = ProfilesController = __decorate([
-    (0, common_1.Controller)('profiles')
+    (0, common_1.Controller)('profiles'),
+    __metadata("design:paramtypes", [profiles_service_1.ProfilesService])
 ], ProfilesController);
 //# sourceMappingURL=profiles.controller.js.map
